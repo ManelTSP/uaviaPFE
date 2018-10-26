@@ -1,0 +1,68 @@
+version: '2.3'
+
+
+services:
+
+  registry:
+        image: jhipster/jhipster-registry:v4.0.5
+        container_name: registry
+        volumes:
+            - ./central-server-config:/central-config
+        # When run with the "dev" Spring profile, the JHipster Registry will
+        # read the config from the local filesystem (central-server-config directory)
+        # When run with the "prod" Spring profile, it will read the configuration from a Git repository
+        # See https://www.jhipster.tech/microservices-architecture/#registry_app_configuration
+        environment:
+            - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - SPRING_PROFILES_ACTIVE=dev,swagger
+            - SPRING_SECURITY_USER_PASSWORD=admin
+            - JHIPSTER_REGISTRY_PASSWORD=admin
+            - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
+            - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/localhost-config/
+            # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=git
+            # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_URI=https://github.com/jhipster/jhipster-registry/
+            # - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_PATHS=central-config
+        ports:
+            - 8761:8761
+ 
+  ### GATEWAY ###
+  mygateway:
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://admin:admin@registry:8761/eureka/
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://admin:admin@jhipster-registry:8761/eureka
+      SPRING_CLOUD_CONFIG_URI: http://admin:admin@registry:8761/config
+    image: mygateway
+    container_name: mygateway
+    ports:
+      - "8080:8080"
+  gateway-db:
+    image: mysql:5.7.20
+    container_name: gateway-db
+    restart: unless-stopped
+    volumes:
+       - ./volumes/data/db:/var/lib/mysql:rw
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: uavia
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+
+
+  ### MICROSERVICE WEBSERVICE ###
+  microserviceapp:
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      #EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://admin:admin@registry:8761/eureka/
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://admin:admin@jhipster-registry:8761/eureka
+      SPRING_CLOUD_CONFIG_URI: http://admin:admin@registry:8761/config
+      SPRING_DATA_MONGODB_URI: mongodb://microservice-ws-db:27017
+      SPRING_DATA_MONGODB_DATABASE: microserviceapp
+    image: microserviceapp
+    container_name: microserviceapp
+  microservice-ws-db: 
+    image: mongo:3.2.3
+    container_name: microserviceapp-ws-db
+    restart: unless-stopped
