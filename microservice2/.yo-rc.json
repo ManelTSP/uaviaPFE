@@ -1,0 +1,37 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.uavia.fr",
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "5.5.0",
+    "applicationType": "microservice",
+    "baseName": "microservice2",
+    "packageName": "com.uavia.fr",
+    "packageFolder": "com/uavia/fr",
+    "serverPort": "8082",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "no",
+    "devDatabaseType": "no",
+    "prodDatabaseType": "no",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "NDRkYWZlODVlNWMwYzU4MDVhNTExNmE2MjA4NjI0OGJmNzk2ZTA2YjI3NDUzZmZkM2E1MTE2NjYyMjFjNmU3ZDllZmRjMmM1YzNlZDJlOGYzNmY5Mzg5ODdmNWZmNWY3ZDc4Nzg4YjY3YzE4NzA0ZTQzYmEzNzYzNjBkMjNiZWE=",
+    "enableTranslation": true,
+    "languages": [
+      "en"
+    ],
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "clientPackageManager": "npm",
+    "nativeLanguage": "en",
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}

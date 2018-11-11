@@ -1,0 +1,87 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration is used for unit/integration tests.
+#
+# More information on profiles: https://www.jhipster.tech/profiles/
+# More information on configuration properties: https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+eureka:
+    client:
+        enabled: false
+    instance:
+        appname: microservice1
+        instanceId: microservice1:${spring.application.instance-id:${random.value}}
+
+spring:
+    application:
+        name: microservice1
+    cache:
+        type: simple
+    mail:
+        host: localhost
+    messages:
+        basename: i18n/messages
+    mvc:
+        favicon:
+            enabled: false
+    thymeleaf:
+        mode: HTML
+
+
+server:
+    port: 10344
+    address: localhost
+
+info:
+    project:
+        version: #project.version#
+
+# ===================================================================
+# JHipster specific properties
+#
+# Full reference is available at: https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+jhipster:
+    async:
+        core-pool-size: 1
+        max-pool-size: 50
+        queue-capacity: 10000
+    # To test logstash appender
+    logging:
+        logstash:
+            enabled: true
+            host: localhost
+            port: 5000
+            queue-size: 512
+    security:
+        authentication:
+            jwt:
+                # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
+                base64-secret: NWI3ZjJlMjI1MjRjOGZiMWJmMjk1YTg3MGNkOTcyNjM0ZDk3OWYwYjdiNDJkODVjNGVmODg0NWNmMTRhMjEyMmZmN2MxYzc4NGE3NWJhN2ZkMjMyODNiZmM2NDhlZTIwNDU4ZTk5OWZiNmFiZDc4M2ZhODM3MzVjNTI5ZWQyMDk=
+                # Token is valid 24 hours
+                token-validity-in-seconds: 86400
+    metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
+        jmx.enabled: true
+        logs: # Reports Dropwizard metrics in the logs
+            enabled: true
+            report-frequency: 60 # in seconds
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# More documentation is available at:
+# https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+# application:
