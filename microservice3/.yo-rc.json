@@ -32,6 +32,17 @@
     "clientPackageManager": "npm",
     "nativeLanguage": "en",
     "skipClient": true,
-    "skipUserManagement": true
+    "skipUserManagement": true,
+    "appsFolders": [
+      "gateway",
+      "microservice1",
+      "microservice2",
+      "microservice3"
+    ],
+    "directoryPath": "../",
+    "gatewayType": "zuul",
+    "monitoring": "elk",
+    "consoleOptions": [],
+    "adminPassword": "admin"
   }
 }

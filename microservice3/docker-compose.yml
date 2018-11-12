@@ -54,17 +54,26 @@ services:
         extends:
             file: jhipster-registry.yml
             service: jhipster-registry
-    logagent:
-        image: 'sematext/logagent:latest'
-        environment:
-            - LOGSENE_TOKEN=345cdfbe-824b-4d00-9f56-7ddaca466960 
-            - SPM_TOKEN=eddd236f-c3f0-4fdc-8f7c-83da84b71448
-            - SPM_RECEIVER_URL=https://spm-receiver.eu.sematext.com/receiver/v1
-            - LOGSENE_RECEIVER_URL=https://logsene-receiver.eu.sematext.com
-            - EVENTS_RECEIVER_URL=https://event-receiver.eu.sematext.com
-            - affinity:container!=*sematext-agent*
-        cap_add:
-            - SYS_ADMIN
-        restart: always
-        volumes:
-            - '/var/run/docker.sock:/var/run/docker.sock'
+
+    jhipster-elasticsearch:
+        extends:
+            file: jhipster-console.yml
+            service: jhipster-elasticsearch
+    jhipster-logstash:
+        extends:
+            file: jhipster-console.yml
+            service: jhipster-logstash
+        depends_on:
+            - jhipster-elasticsearch
+    jhipster-console:
+        extends:
+            file: jhipster-console.yml
+            service: jhipster-console
+        depends_on:
+            - jhipster-elasticsearch
+    jhipster-import-dashboards:
+        extends:
+            file: jhipster-console.yml
+            service: jhipster-import-dashboards
+        depends_on:
+            - jhipster-elasticsearch

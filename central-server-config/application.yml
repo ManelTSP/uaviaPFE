@@ -7,15 +7,7 @@ jhipster:
     security:
         authentication:
             jwt:
-                base64-secret: YzBhOTk5MTE3OGQ5MWVmMzJmYWVlYzcyNWYxZDFkYTIxYTE2ZWJlODcwZGZkYzRiMWQ2MTVmYzIwZDVmZDMwZDYwNmY2ZmEzNTkxNTQzZWQ4YTQ5NzQ3OGMyZGEwYjFlZjczMw==
-    logging:
-        logstash: # forward logs to ELK
-            enabled: true
-            host: jhipster-logstash
-    metrics:
-        logs: # report metrics in the logs
-            enabled: true
-            report-frequency: 60 # in seconds
+                base64-secret: NmJiOThlZjkyMWMxYTA5Y2E2MWU0NTViNTRjOWIzZjVlMTY0MTFlMjE0NjBiNzI0ZGY3YTAzZWU4NTZiOWY3YWFmNDI0ZDgyZTRhZjczYWQ5NTVmMDlmODc4NGFhMzIyMTMyZg==
 
 eureka:
     client:
