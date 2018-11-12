@@ -1,7 +1,7 @@
 version: '2'
 services:
     gateway-app:
-        image: gateway
+        image: khaledmoalla/gateway:1.0
         environment:
             - _JAVA_OPTIONS=-Xmx512m -Xms256m
             - 'SPRING_PROFILES_ACTIVE=prod,swagger'
@@ -21,50 +21,57 @@ services:
         command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
     
     microservice1-app:
-        image: microservice1
+        image: khaledmoalla/microservice1:1.0
         environment:
             - _JAVA_OPTIONS=-Xmx512m -Xms256m
             - 'SPRING_PROFILES_ACTIVE=prod,swagger'
             - 'EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka'
             - 'SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config'
-            - JHIPSTER_SLEEP=30
+            - JHIPSTER_SLEEP=40
             - JHIPSTER_REGISTRY_PASSWORD=admin
     
     microservice2-app:
-        image: microservice2
+        image: khaledmoalla/microservice2:1.0
         environment:
             - _JAVA_OPTIONS=-Xmx512m -Xms256m
             - 'SPRING_PROFILES_ACTIVE=prod,swagger'
             - 'EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka'
             - 'SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config'
-            - JHIPSTER_SLEEP=30
+            - JHIPSTER_SLEEP=50
             - JHIPSTER_REGISTRY_PASSWORD=admin
     
     microservice3-app:
-        image: microservice3
+        image: khaledmoalla/microservice3:1.0
         environment:
             - _JAVA_OPTIONS=-Xmx512m -Xms256m
             - 'SPRING_PROFILES_ACTIVE=prod,swagger'
             - 'EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka'
             - 'SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config'
-            - JHIPSTER_SLEEP=30
+            - JHIPSTER_SLEEP=60
             - JHIPSTER_REGISTRY_PASSWORD=admin
     
     jhipster-registry:
         extends:
             file: jhipster-registry.yml
             service: jhipster-registry
-    logagent:
-        image: 'sematext/logagent:latest'
+
+    splunk:
+       image: splunk/splunk:latest
+       environment:
+         SPLUNK_START_ARGS: --accept-license --answer-yes
+         SPLUNK_ENABLE_LISTEN: 9997
+         SPLUNK_ADD: tcp 1514
+         SPLUNK_USER: root
+       ports:
+         - "8000:8000"
+         - "9997:9997"
+         - "8088:8088"
+         - "1514:1514"
+
+    logspout:
+        image: tfjellstrom/logspout-splunk
         environment:
-            - LOGSENE_TOKEN=345cdfbe-824b-4d00-9f56-7ddaca466960 
-            - SPM_TOKEN=eddd236f-c3f0-4fdc-8f7c-83da84b71448
-            - SPM_RECEIVER_URL=https://spm-receiver.eu.sematext.com/receiver/v1
-            - LOGSENE_RECEIVER_URL=https://logsene-receiver.eu.sematext.com
-            - EVENTS_RECEIVER_URL=https://event-receiver.eu.sematext.com
-            - affinity:container!=*sematext-agent*
-        cap_add:
-            - SYS_ADMIN
-        restart: always
+        - DEBUG=1
         volumes:
-            - '/var/run/docker.sock:/var/run/docker.sock'
+        - /var/run/docker.sock:/tmp/docker.sock
+        
