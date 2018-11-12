@@ -54,11 +54,8 @@ services:
         extends:
             file: jhipster-registry.yml
             service: jhipster-registry
-    logspout:
-     image: gliderlabs/logspout:latest
-     environment:
-     - SYSLOG_STRUCTURED_DATA="ba284b93-a4b9-4a62-86d4-7d3e9c1fb3d8@41058 tag=\"Logspout\""
-     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-     command:
-      syslog+tcp://logs-01.loggly.com:514
+    logstash:
+     image: docker.elastic.co/logstash/logstash-oss:6.1.3
+     command: sh -c 'rm -v /usr/share/logstash/config/logstash.yml; logstash -f ./logstash-loggly.conf'
+     restart: unless-stopped
+
