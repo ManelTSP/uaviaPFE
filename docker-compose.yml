@@ -1,7 +1,7 @@
 version: '2'
 services:
     gateway-app:
-        image: gateway
+        image: khaledmoalla/gateway
         environment:
             - _JAVA_OPTIONS=-Xmx512m -Xms256m
             - 'SPRING_PROFILES_ACTIVE=prod,swagger'
@@ -21,7 +21,7 @@ services:
         command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
     
     microservice1-app:
-        image: microservice1
+        image: khaledmoalla/microservice1
         environment:
             - _JAVA_OPTIONS=-Xmx512m -Xms256m
             - 'SPRING_PROFILES_ACTIVE=prod,swagger'
@@ -31,7 +31,7 @@ services:
             - JHIPSTER_REGISTRY_PASSWORD=admin
     
     microservice2-app:
-        image: microservice2
+        image: khaledmoalla/microservice2
         environment:
             - _JAVA_OPTIONS=-Xmx512m -Xms256m
             - 'SPRING_PROFILES_ACTIVE=prod,swagger'
@@ -41,7 +41,7 @@ services:
             - JHIPSTER_REGISTRY_PASSWORD=admin
     
     microservice3-app:
-        image: microservice3
+        image: khaledmoalla/microservice3
         environment:
             - _JAVA_OPTIONS=-Xmx512m -Xms256m
             - 'SPRING_PROFILES_ACTIVE=prod,swagger'
