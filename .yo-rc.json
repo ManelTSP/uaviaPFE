@@ -1,0 +1,16 @@
+{
+  "generator-jhipster": {
+    "appsFolders": [
+      "gateway",
+      "microservice1",
+      "microservice2",
+      "microservice3"
+    ],
+    "directoryPath": "./",
+    "gatewayType": "zuul",
+    "monitoring": "no",
+    "serviceDiscoveryType": "eureka",
+    "adminPassword": "admin",
+    "jwtSecretKey": "MzIzMWMyNWM4Zjk4MDRlZWU4ZTI3ZjdkY2U3YzI3YTczOWNiMmU2YWFiM2MzZDc3MjU1YmQ0MjI4MTIxYjZmYmI2ZjBkYWZkOTlkZjg4MTI0OWVhODhkYWJiY2RiODliZThjYg=="
+  }
+}
