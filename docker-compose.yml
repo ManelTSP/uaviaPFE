@@ -27,6 +27,11 @@ services:
             - MYSQL_ALLOW_EMPTY_PASSWORD=yes
             - MYSQL_DATABASE=gateway
         command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+        logging:
+         driver: syslog
+         options:
+          syslog-address: "udp://localhost:8088" 
+          tag: "{{.Name}}/{{.FullID}}"
     
     microservice1-app:
         image: khaledmoalla/microservice1:1.0
@@ -77,6 +82,11 @@ services:
         extends:
             file: jhipster-registry.yml
             service: jhipster-registry
+        logging:
+         driver: syslog
+         options:
+          syslog-address: "udp://localhost:8088" 
+          tag: "{{.Name}}/{{.FullID}}"
 
     splunkentreprise:
         hostname: splunkenterprise 
