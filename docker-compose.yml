@@ -1,4 +1,6 @@
 version: '2'
+volumes:
+  home:
 services:
     gateway-app:
         image: khaledmoalla/gateway:1.0
@@ -12,6 +14,12 @@ services:
             - JHIPSTER_REGISTRY_PASSWORD=admin
         ports:
             - '8080:8080'
+        logging:
+         driver: syslog
+         options:
+          syslog-address: "udp://localhost:8088" 
+          tag: "{{.Name}}/{{.FullID}}"
+
     gateway-mysql:
         image: 'mysql:5.7.20'
         environment:
@@ -27,9 +35,14 @@ services:
             - 'SPRING_PROFILES_ACTIVE=prod,swagger'
             - 'EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka'
             - 'SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config'
-            - JHIPSTER_SLEEP=40
+            - JHIPSTER_SLEEP=60
             - JHIPSTER_REGISTRY_PASSWORD=admin
-    
+        logging:
+         driver: syslog
+         options:
+          syslog-address: "udp://localhost:8088" 
+          tag: "{{.Name}}/{{.FullID}}"
+
     microservice2-app:
         image: khaledmoalla/microservice2:1.0
         environment:
@@ -37,9 +50,14 @@ services:
             - 'SPRING_PROFILES_ACTIVE=prod,swagger'
             - 'EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka'
             - 'SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config'
-            - JHIPSTER_SLEEP=50
+            - JHIPSTER_SLEEP=75
             - JHIPSTER_REGISTRY_PASSWORD=admin
-    
+        logging:
+         driver: syslog
+         options:
+          syslog-address: "udp://localhost:8088" 
+          tag: "{{.Name}}/{{.FullID}}"
+   
     microservice3-app:
         image: khaledmoalla/microservice3:1.0
         environment:
@@ -47,31 +65,27 @@ services:
             - 'SPRING_PROFILES_ACTIVE=prod,swagger'
             - 'EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka'
             - 'SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config'
-            - JHIPSTER_SLEEP=60
+            - JHIPSTER_SLEEP=90
             - JHIPSTER_REGISTRY_PASSWORD=admin
-    
+        logging:
+         driver: syslog
+         options:
+          syslog-address: "udp://localhost:8088" 
+          tag: "{{.Name}}/{{.FullID}}"
+   
     jhipster-registry:
         extends:
             file: jhipster-registry.yml
             service: jhipster-registry
 
-    splunk:
-       image: splunk/splunk:latest
-       environment:
-         SPLUNK_START_ARGS: --accept-license --answer-yes
-         SPLUNK_ENABLE_LISTEN: 9997
-         SPLUNK_ADD: tcp 1514
-         SPLUNK_USER: root
-       ports:
-         - "8000:8000"
-         - "9997:9997"
-         - "8088:8088"
-         - "1514:1514"
-
-    logspout:
-        image: tfjellstrom/logspout-splunk
+    splunkentreprise:
+        hostname: splunkenterprise 
+        image: splunk/splunk:7.0.3 
         environment:
-        - DEBUG=1
-        volumes:
-        - /var/run/docker.sock:/tmp/docker.sock
-        
+         SPLUNK_START_ARGS: --accept-license --answer-yes
+         SPLUNK_USER: root
+         SPLUNK_UPGRADE: 0
+        ports:
+         - "8000:8000"
+         - "8088:8088/udp"
+
