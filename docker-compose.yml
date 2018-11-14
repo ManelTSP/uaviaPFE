@@ -58,8 +58,7 @@ services:
         image: 'sematext/logagent:latest'
         environment:
             - LOGSENE_TOKEN=345cdfbe-824b-4d00-9f56-7ddaca466960 
-            - SPM_TOKEN=eddd236f-c3f0-4fdc-8f7c-83da84b71448
-            - SPM_RECEIVER_URL=https://spm-receiver.eu.sematext.com/receiver/v1
+            - SPM_RECEIVER_URL=https://spm-receiver.eu.sematext.com
             - LOGSENE_RECEIVER_URL=https://logsene-receiver.eu.sematext.com
             - EVENTS_RECEIVER_URL=https://event-receiver.eu.sematext.com
             - affinity:container!=*sematext-agent*
@@ -68,3 +67,20 @@ services:
         restart: always
         volumes:
             - '/var/run/docker.sock:/var/run/docker.sock'
+            - '/etc/localtime:/etc/localtime:ro'
+
+    monitoragent:
+        image: 'sematext/logagent:latest'
+        environment:
+            - LOGSENE_TOKEN=345cdfbe-824b-4d00-9f56-7ddaca466960 
+            - SPM_TOKEN=eddd236f-xxxxxxxxxxxxxx-83da84b71448
+            - SPM_RECEIVER_URL=https://spm-receiver.eu.sematext.com
+            - LOGSENE_RECEIVER_URL=https://logsene-receiver.eu.sematext.com
+            - EVENTS_RECEIVER_URL=https://event-receiver.eu.sematext.com
+            - affinity:container!=*sematext-agent*
+        cap_add:
+            - SYS_ADMIN
+        restart: always
+        volumes:
+            - '/var/run/docker.sock:/var/run/docker.sock'
+            - '/:/rootfs:ro'
