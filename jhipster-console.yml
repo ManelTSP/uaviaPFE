@@ -20,7 +20,7 @@ services:
             - 5000:5000/udp
         # Uncomment this section and add a logstash.conf file in log-conf/
         # to have logstash config loaded from a volume
-        #volumes:
+        volumes:
         #    - ./log-conf/:/usr/share/logstash/pipeline/
     jhipster-console:
         image: jhipster/jhipster-console:v4.0.0
@@ -32,12 +32,6 @@ services:
         image: jhipster/jhipster-import-dashboards:v4.0.0
         environment:
             - ELASTICSEARCH_URL=http://jhipster-elasticsearch:9200
-    jhipster-curator:
-        image: jhipster/jhipster-curator:v4.0.0
-        environment:
-            - ES_HOST=jhipster-elasticsearch
-            - UNIT_COUNT=7
-            - UNIT=days
 
 # Uncomment to use the log-data volume
 # volumes:
