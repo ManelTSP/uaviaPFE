@@ -1,0 +1,82 @@
+version: '2'
+services:
+    gateway-app:
+        image: khaledmoalla/gateway:1.0
+        environment:
+            - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - 'SPRING_PROFILES_ACTIVE=prod,swagger'
+            - 'EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka'
+            - 'SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config'
+            - 'SPRING_DATASOURCE_URL=jdbc:mysql://gateway-mysql:3306/gateway?useUnicode=true&characterEncoding=utf8&useSSL=false'
+            - JHIPSTER_SLEEP=30
+            - JHIPSTER_REGISTRY_PASSWORD=admin
+        ports:
+            - '8080:8080'
+        logging:
+         driver: syslog
+         options:
+          syslog-address: tcp://localhost:5000
+          syslog-facility: daemon
+    gateway-mysql:
+        image: 'mysql:5.7.20'
+        environment:
+            - MYSQL_USER=root
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_DATABASE=gateway
+        command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+        logging:
+         driver: syslog
+         options:
+          syslog-address: tcp://localhost:5000
+          syslog-facility: daemon    
+    microservice1-app:
+        image: khaledmoalla/microservice1:1.0
+        environment:
+            - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - 'SPRING_PROFILES_ACTIVE=prod,swagger'
+            - 'EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka'
+            - 'SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config'
+            - JHIPSTER_SLEEP=40
+            - JHIPSTER_REGISTRY_PASSWORD=admin
+        logging:
+         driver: syslog
+         options:
+          syslog-address: tcp://localhost:5000
+          syslog-facility: daemon    
+    microservice2-app:
+        image: khaledmoalla/microservice2:1.0
+        environment:
+            - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - 'SPRING_PROFILES_ACTIVE=prod,swagger'
+            - 'EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka'
+            - 'SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config'
+            - JHIPSTER_SLEEP=50
+            - JHIPSTER_REGISTRY_PASSWORD=admin
+        logging:
+         driver: syslog
+         options:
+          syslog-address: tcp://localhost:5000
+          syslog-facility: daemon    
+    microservice3-app:
+        image: khaledmoalla/microservice3:1.0
+        environment:
+            - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - 'SPRING_PROFILES_ACTIVE=prod,swagger'
+            - 'EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka'
+            - 'SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config'
+            - JHIPSTER_SLEEP=60
+            - JHIPSTER_REGISTRY_PASSWORD=admin
+        logging:
+         driver: syslog
+         options:
+          syslog-address: tcp://localhost:5000
+          syslog-facility: daemon    
+    jhipster-registry:
+        extends:
+            file: jhipster-registry.yml
+            service: jhipster-registry
+        logging:
+         driver: syslog
+         options:
+          syslog-address: tcp://localhost:5000
+          syslog-facility: daemon
