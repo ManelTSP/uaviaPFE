@@ -15,8 +15,7 @@ services:
         logging:
          driver: syslog
          options:
-          syslog-address: tcp://localhost:5000
-          syslog-facility: daemon
+          syslog-address: tcp://localhost:5140
     gateway-mysql:
         image: 'mysql:5.7.20'
         environment:
@@ -27,8 +26,7 @@ services:
         logging:
          driver: syslog
          options:
-          syslog-address: tcp://localhost:5000
-          syslog-facility: daemon    
+          syslog-address: tcp://localhost:5140    
     microservice1-app:
         image: khaledmoalla/microservice1:1.0
         environment:
@@ -41,8 +39,7 @@ services:
         logging:
          driver: syslog
          options:
-          syslog-address: tcp://localhost:5000
-          syslog-facility: daemon    
+          syslog-address: tcp://localhost:5140  
     microservice2-app:
         image: khaledmoalla/microservice2:1.0
         environment:
@@ -55,8 +52,7 @@ services:
         logging:
          driver: syslog
          options:
-          syslog-address: tcp://localhost:5000
-          syslog-facility: daemon    
+          syslog-address: tcp://localhost:5140  
     microservice3-app:
         image: khaledmoalla/microservice3:1.0
         environment:
@@ -69,8 +65,7 @@ services:
         logging:
          driver: syslog
          options:
-          syslog-address: tcp://localhost:5000
-          syslog-facility: daemon    
+          syslog-address: tcp://localhost:5140   
     jhipster-registry:
         extends:
             file: jhipster-registry.yml
@@ -79,4 +74,3 @@ services:
          driver: syslog
          options:
           syslog-address: tcp://localhost:5000
-          syslog-facility: daemon
