@@ -16,6 +16,7 @@ services:
          driver: syslog
          options:
           syslog-address: tcp://localhost:5000
+          tag: "{{.ImageName}}/{{.Name}}/{{.ID}}"
     gateway-mysql:
         image: 'mysql:5.7.20'
         environment:
@@ -26,7 +27,8 @@ services:
         logging:
          driver: syslog
          options:
-          syslog-address: tcp://localhost:5000   
+          syslog-address: tcp://localhost:5000
+          tag: "{{.ImageName}}/{{.Name}}/{{.ID}}"   
     microservice1-app:
         image: khaledmoalla/microservice1:1.0
         environment:
@@ -39,7 +41,8 @@ services:
         logging:
          driver: syslog
          options:
-          syslog-address: tcp://localhost:5000  
+          syslog-address: tcp://localhost:5000 
+          tag: "{{.ImageName}}/{{.Name}}/{{.ID}}" 
     microservice2-app:
         image: khaledmoalla/microservice2:1.0
         environment:
@@ -52,7 +55,8 @@ services:
         logging:
          driver: syslog
          options:
-          syslog-address: tcp://localhost:5000 
+          syslog-address: tcp://localhost:5000
+          tag: "{{.ImageName}}/{{.Name}}/{{.ID}}" 
     microservice3-app:
         image: khaledmoalla/microservice3:1.0
         environment:
@@ -65,7 +69,8 @@ services:
         logging:
          driver: syslog
          options:
-          syslog-address: tcp://localhost:5000  
+          syslog-address: tcp://localhost:5000 
+          tag: "{{.ImageName}}/{{.Name}}/{{.ID}}" 
     jhipster-registry:
         extends:
             file: jhipster-registry.yml
@@ -74,3 +79,4 @@ services:
          driver: syslog
          options:
           syslog-address: tcp://localhost:5000
+          tag: "{{.ImageName}}/{{.Name}}/{{.ID}}"
