@@ -60,12 +60,18 @@ public class GatewayApp {
      * Main method, used to run the application.
      *
      * @param args the command line arguments
+     * @throws InterruptedException 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         SpringApplication app = new SpringApplication(GatewayApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         logApplicationStartup(env);
+        while(true) {
+        	log.warn("endless log");
+        Thread.sleep(1000);
+        }
+        
     }
 
     private static void logApplicationStartup(Environment env) {
