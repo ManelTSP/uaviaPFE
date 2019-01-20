@@ -67,11 +67,6 @@ public class GatewayApp {
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         logApplicationStartup(env);
-        while(true) {
-        	log.warn("endless log");
-        Thread.sleep(1000);
-        }
-        
     }
 
     private static void logApplicationStartup(Environment env) {
