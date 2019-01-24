@@ -16,6 +16,7 @@ services:
          driver: syslog
          options:
           syslog-address: tcp://localhost:5000
+          syslog-format: rfc5424
           tag: "gateway"
     gateway-mysql:
         image: 'mysql:5.7.20'
@@ -28,6 +29,7 @@ services:
          driver: syslog
          options:
           syslog-address: tcp://localhost:5000
+          syslog-format: rfc5424
           tag: "Mysql"   
     microservice1-app:
         image: khaledmoalla/microservice1:1.0
@@ -42,6 +44,7 @@ services:
          driver: syslog
          options:
           syslog-address: tcp://localhost:5000 
+          syslog-format: rfc5424
           tag: "uservice1" 
     microservice2-app:
         image: khaledmoalla/microservice2:1.0
@@ -56,6 +59,7 @@ services:
          driver: syslog
          options:
           syslog-address: tcp://localhost:5000
+          syslog-format: rfc5424
           tag: "uservice2" 
     microservice3-app:
         image: khaledmoalla/microservice3:1.0
@@ -70,6 +74,7 @@ services:
          driver: syslog
          options:
           syslog-address: tcp://localhost:5000 
+          syslog-format: rfc5424
           tag: "uservice3" 
     jhipster-registry:
         extends:
@@ -79,4 +84,5 @@ services:
          driver: syslog
          options:
           syslog-address: tcp://localhost:5000
+          syslog-format: rfc5424
           tag: "registery"
